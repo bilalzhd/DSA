@@ -18,13 +18,14 @@ void linkedlist(struct Node *ptr){
     }
 }
 void isEmpty(struct Stack * ptr){ 
-    if(ptr->top ){
-
+    if(ptr->top == -1){
+         printf("Stack is empty");
+         return 1;
     }
 }
 
-void push(struct Stack * ptr, int val){
-
+void push(struct Stack * s, int val){
+  s->ptr // incomplete
 }
 
 int main() {
