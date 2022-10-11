@@ -14,10 +14,10 @@ void linkedlist(struct Node *ptr){
 }
 int main() {
     
-    struct Node * head;
-    struct Node * second;
-    struct Node * third;
-    struct Node * fourth;
+    struct Node* head;
+    struct Node* second;
+    struct Node* third;
+    struct Node* fourth;
     
     head = (struct Node *)malloc(sizeof(struct Node));
     second = (struct Node *)malloc(sizeof(struct Node));

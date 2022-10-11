@@ -13,14 +13,14 @@ void linkedlistTraversal(struct Node *ptr){
     }
 }
 
-struct Node* insertionAtFirst(struct Node*head, int data){
-    struct Node*ptr = (struct Node*)malloc(sizeof(struct Node));
+struct Node* insertionAtFirst(struct Node* head, int data){
+    struct Node* ptr = (struct Node*)malloc(sizeof(struct Node));
     ptr->next = head;
     ptr->data = data;
     return ptr;
 }
 
-struct Node* insertAtIndex(struct Node*head, int data, int index){
+struct Node* insertAtIndex(struct Node* head, int data, int index){
     struct Node * ptr = (struct Node *)malloc(sizeof(struct Node));
     struct Node * p = head;
     int i = 0;
