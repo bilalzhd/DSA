@@ -19,6 +19,7 @@ void bubbleSort(int *A, int size){
         }
     }
 }
+
 void bubbleSortAdaptive(int *A, int size){
     int temp;
     int isSorted = 0;

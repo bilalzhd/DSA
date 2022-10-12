@@ -13,8 +13,7 @@ void constructor(struct myArray * a, int tSize, int uSize){
     a->used_size = uSize;
     a->ptr = (int *)malloc(tSize * sizeof(int));
 }
-void setVal(struct myArray * a)
-{
+void setVal(struct myArray * a){
     int n;
     for(int i=0; i < a->used_size; i++)
     {
@@ -23,8 +22,7 @@ void setVal(struct myArray * a)
         (a->ptr)[i] = n;
     }
 }
-void show(struct myArray * a)
-{
+void show(struct myArray * a){
     for(int i=0; i < a->used_size; i++)
     {
         printf("%d\n", (a->ptr)[i]);
