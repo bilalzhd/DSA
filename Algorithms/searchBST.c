@@ -33,6 +33,7 @@ struct Node* createNode(int data){
     n->data = data;
     n->left = NULL;
     n->right = NULL;
+    return n;
 }
 
 
