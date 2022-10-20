@@ -1,4 +1,5 @@
-// PreOrder PostOrder and Inorder Traversal in a Binary Tree
+// PreOrder, PostOrder and Inorder Traversal in a Binary Tree
+
 #include <stdio.h>
 #include <malloc.h>
 
