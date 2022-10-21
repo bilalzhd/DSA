@@ -42,8 +42,7 @@ void insert(struct node *root, int key){
 }
 
 int main(){
-     
-    // Constructing the root node - Using Function (Recommended)
+    
     struct node *p = createNode(5);
     struct node *p1 = createNode(3);
     struct node *p2 = createNode(6);
