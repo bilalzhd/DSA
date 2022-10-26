@@ -27,27 +27,29 @@ struct Node* createNode(int key){
 }
 
 int getBalanceFactor(struct Node * n){
-    if(n == NULL) return 0;
+    if(n == NULL) {
+        return 0;
+    }
     return getHeight(n->left) - getHeight(n->right);
 }
 
 struct Node* leftRotate(struct Node* x){
-    struct Node * y = x->right;
-    struct Node * t = y->left;
+    struct Node* y = x->right;
+    struct Node* t = y->left;
 
     y->left = x;
     x->right = t;
 
-    y->height = max(getHeight(y->right), getHeight(y->left)) + 1;
     x->height = max(getHeight(x->right), getHeight(x->left)) + 1;
+    y->height = max(getHeight(y->right), getHeight(y->left)) + 1;
 
     return y;
 
 }
 
 struct Node* rightRotate(struct Node* y){
-    struct Node * x = y->left;
-    struct Node * t = x->right;
+    struct Node* x = y->left;
+    struct Node* t = x->right;
 
     x->right = y;
     y->left = t;
@@ -59,43 +61,58 @@ struct Node* rightRotate(struct Node* y){
 
 }
 
-struct Node * insert(struct Node* n, int key){
-    if(n == NULL) return createNode(key);
-    if(key < n->key){
-        n->left = insert(n->left, key);
+struct Node* insert(struct Node* node, int key){
+    if(node == NULL) return createNode(key);
+
+    if(key < node->key){
+        node->left = insert(node->left, key);
     }
-    else if(key > n->key){
-        n->right = insert(n->right, key);
+    else if(key > node->key){
+        node->right = insert(node->right, key);
     }
-    n->height = 1 + max(getHeight(n->left), getHeight(n->right));
-    int balanceFactor = getBalanceFactor(n);
+    node->height = 1 + max(getHeight(node->left), getHeight(node->right));
+    int balanceFactor = getBalanceFactor(node);
 
     // LL rotation
-    if(balanceFactor > 1 && key < n->left->key){
-        rightRotate(n);
+    if(balanceFactor > 1 && key < node->left->key){
+        return rightRotate(node);
     }
     // RR rotation
-    if(balanceFactor < -1 && key > n->right->key){
-        leftRotate(n);
+    if(balanceFactor < -1 && key > node->right->key){
+        return leftRotate(node);
     }
     // LR rotation
-    if(balanceFactor > 1 && key > n->left->key){
-        n->left = leftRotate(n->left);
-        rightRotate(n);
+    if(balanceFactor > 1 && key > node->left->key){
+        node->left = leftRotate(node->left);
+        return rightRotate(node);
     }
     // RL rotation
-    if(balanceFactor < -1 && key < n->right->key){
-        n->right = rightRotate(n->right);
-        leftRotate(n);
+    if(balanceFactor < -1 && key < node->right->key){
+        node->right = rightRotate(node->right);
+        return leftRotate(node);
     }
 
-    return n;
+    return node;
 
 }
 
-
+void preOrder(struct Node* root){
+    if(root != NULL){
+        printf("%d ", root->key);
+        preOrder(root->left);
+        preOrder(root->right);
+    }
+}
 
 
 int main(){
+    struct Node* root = NULL;
+    root = insert(root, 1);
+    root = insert(root, 2);
+    root = insert(root, 4);
+    root = insert(root, 5);
+    root = insert(root, 6);
+    root = insert(root, 3);
+    preOrder(root);
     return 0;
 }
