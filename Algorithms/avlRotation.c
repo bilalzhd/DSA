@@ -2,14 +2,15 @@
 #include <malloc.h>
 
 struct Node {
-    int key;
+    int data;
     struct Node* left;
     struct Node* right;
     int height;
 };
 
+
 int max(int a, int b){
-    return a > b ? a : b;
+    return a ? a > b : b;
 }
 
 int getHeight(struct Node* n){
@@ -17,19 +18,16 @@ int getHeight(struct Node* n){
     return n->height;
 }
 
-struct Node* createNode(int key){
-    struct Node* node = (struct Node *) malloc (sizeof(struct Node));
-    node->key = key;
+struct Node* createNode(int data){
+    struct Node* node = (struct Node*) malloc (sizeof(struct Node));
     node->left = NULL;
     node->right = NULL;
     node->height = 1;
     return node;
 }
 
-int getBalanceFactor(struct Node * n){
-    if(n == NULL) {
-        return 0;
-    }
+int balanceFactor (struct Node* n){
+    if(n == NULL) return 0;
     return getHeight(n->left) - getHeight(n->right);
 }
 
@@ -40,11 +38,10 @@ struct Node* leftRotate(struct Node* x){
     y->left = x;
     x->right = t;
 
-    x->height = max(getHeight(x->right), getHeight(x->left)) + 1;
-    y->height = max(getHeight(y->right), getHeight(y->left)) + 1;
+    y->height = max(getHeight(y->left), getHeight(y->right)) + 1;
+    x->height = max(getHeight(x->left), getHeight(x->right)) + 1;
 
     return y;
-
 }
 
 struct Node* rightRotate(struct Node* y){
@@ -54,56 +51,43 @@ struct Node* rightRotate(struct Node* y){
     x->right = y;
     y->left = t;
 
-    y->height = max(getHeight(y->right), getHeight(y->left)) + 1;
-    x->height = max(getHeight(x->right), getHeight(x->left)) + 1;
+    x->height = max(getHeight(x->left), getHeight(x->right)) + 1;
+    y->height = max(getHeight(y->left), getHeight(y->right)) + 1;
 
     return x;
-
 }
 
-struct Node* insert(struct Node* node, int key){
-    if(node == NULL) return createNode(key);
-
-    if(key < node->key){
-        node->left = insert(node->left, key);
+void preOrderTraversal(struct Node* node){
+    if(node != NULL){
+        printf("%d", node->data);
+        preOrderTraversal(node->left);
+        preOrderTraversal(node->right);
     }
-    else if(key > node->key){
-        node->right = insert(node->right, key);
-    }
-    node->height = 1 + max(getHeight(node->left), getHeight(node->right));
-    int balanceFactor = getBalanceFactor(node);
+}
 
-    // LL rotation
-    if(balanceFactor > 1 && key < node->left->key){
+struct Node* insert(struct Node* node, int data){
+    if(node == NULL) return createNode(data);
+
+    if(node->data < data) node->left = insert(node->left, data);
+    else if(node->data > data) node->right = insert(node->right, data);
+    int bf = balanceFactor(node);
+    if(bf > 1 && data < node->left->data){
         return rightRotate(node);
     }
-    // RR rotation
-    if(balanceFactor < -1 && key > node->right->key){
+    if(bf < -1 && data > node->right->data){
         return leftRotate(node);
     }
-    // LR rotation
-    if(balanceFactor > 1 && key > node->left->key){
-        node->left = leftRotate(node->left);
+    if(bf > 1 && data > node->left->data){
+        node->left = leftRotate(node);
         return rightRotate(node);
     }
-    // RL rotation
-    if(balanceFactor < -1 && key < node->right->key){
+    if(bf < -1 && data < node->right->data){
         node->right = rightRotate(node->right);
         return leftRotate(node);
     }
-
     return node;
 
 }
-
-void preOrder(struct Node* root){
-    if(root != NULL){
-        printf("%d ", root->key);
-        preOrder(root->left);
-        preOrder(root->right);
-    }
-}
-
 
 int main(){
     struct Node* root = NULL;
@@ -113,6 +97,7 @@ int main(){
     root = insert(root, 5);
     root = insert(root, 6);
     root = insert(root, 3);
-    preOrder(root);
+    preOrderTraversal(root);
     return 0;
 }
+
