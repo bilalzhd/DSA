@@ -41,7 +41,7 @@ void bubbleSortAdaptive(int *A, int size){
 }
 
 int main(){
-    int A[] = {2, 3, 4, 5, 7};
+    int A[] = {7, 3, 1, 2, 4};
     int n = 5;
     printArray(A, n);
     printf("\n");
